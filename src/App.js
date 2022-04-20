@@ -8,6 +8,7 @@ import {
 
 import { Navbar } from './app/Navbar'
 import { AddPostForm } from './features/post/AddPostForm'
+import { EditPostForm } from './features/post/EditPostForm'
 import { PostsList } from './features/post/PostsList'
 import { SinglePostPage } from './features/post/SinglePostPage'
 
@@ -28,6 +29,7 @@ function App() {
             )}
           />
           <Route exact path="/posts/:postId" component={SinglePostPage} />
+          <Route exact path="/editPost/:postId" component={EditPostForm} />
           <Redirect to="/" />
         </Switch>
       </div>

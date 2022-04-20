@@ -1,4 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { postAdded } from './postsSlice'
@@ -15,11 +14,11 @@ export const AddPostForm = () => {
   const onSavePostClicked = () => {
     if (title && content) {
       dispatch(
-        postAdded({
-          id: nanoid(),
-          title,
-          content,
-        })
+        /* Now our component doesn't have to worry about what the payload object
+          looks like - the action creator will take care of putting it together
+          the right way. So, we can update the component so that it passes in
+          title and content as arguments when it dispatches postAdded */
+        postAdded(title, content)
       )
 
       setTitle('')

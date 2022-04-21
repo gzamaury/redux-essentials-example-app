@@ -22,12 +22,13 @@ const postsSlice = createSlice({
         meta field, which can be used to add extra descriptive values to the action, and
         an error field, which should be a boolean indicating whether this action 
         represents some kind of an error.) */
-      prepare(title, content) {
+      prepare(title, content, userId) {
         return {
           payload: {
             id: nanoid(),
             title,
             content,
+            user: userId,
           },
         }
       },

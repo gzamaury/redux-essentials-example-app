@@ -1,35 +1,10 @@
-import { sub } from 'date-fns'
-
 const { createSlice, nanoid } = require('@reduxjs/toolkit')
 
-const initialState = [
-  {
-    id: '1',
-    title: 'First Post!',
-    content: 'Hello!',
-    reactions: {
-      thumbsUp: 0,
-      hooray: 0,
-      heart: 0,
-      rocket: 0,
-      eyes: 0,
-    },
-    date: sub(new Date(), { minutes: 10 }).toISOString(),
-  },
-  {
-    id: '2',
-    title: 'Second Post',
-    content: 'More text',
-    reactions: {
-      thumbsUp: 0,
-      hooray: 0,
-      heart: 0,
-      rocket: 0,
-      eyes: 0,
-    },
-    date: sub(new Date(), { minutes: 5 }).toISOString(),
-  },
-]
+const initialState = {
+  posts: [],
+  status: 'idle',
+  error: null,
+}
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -39,7 +14,7 @@ const postsSlice = createSlice({
       that looks like {reducer, prepare} */
     postAdded: {
       reducer(state, action) {
-        state.push(action.payload)
+        state.posts.push(action.payload)
       },
       /* createSlice lets us define a "prepare callback" function that can take
         multiple arguments, generate random values like unique IDs, and run synchronous
@@ -69,7 +44,7 @@ const postsSlice = createSlice({
     },
     postUpdated(state, action) {
       const { id, title, content } = action.payload
-      const existingPost = state.find((post) => post.id === id)
+      const existingPost = state.posts.find((post) => post.id === id)
       if (existingPost) {
         existingPost.title = title
         existingPost.content = content
@@ -77,7 +52,7 @@ const postsSlice = createSlice({
     },
     reactionAdded(state, action) {
       const { postId, reaction } = action.payload
-      const existingPost = state.find((post) => post.id === postId)
+      const existingPost = state.posts.find((post) => post.id === postId)
       if (existingPost) {
         existingPost.reactions[reaction]++
       }
@@ -93,6 +68,6 @@ export default postsSlice.reducer
   use those selectors to extract the data they need instead of repeating the selector
   logic in each component. That way, if we do change our state structure again, we only 
   need to update the code in the slice file. */
-export const selectAllPosts = (state) => state.posts
+export const selectAllPosts = (state) => state.posts.posts
 export const selectPostById = (postId) => (state) =>
-  state.posts.find((post) => post.id === postId)
+  state.posts.posts.find((post) => post.id === postId)

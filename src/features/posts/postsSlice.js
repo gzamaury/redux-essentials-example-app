@@ -1,10 +1,17 @@
-const { createSlice, nanoid } = require('@reduxjs/toolkit')
+import { client } from '../../api/client'
+
+const { createSlice, nanoid, createAsyncThunk } = require('@reduxjs/toolkit')
 
 const initialState = {
   posts: [],
   status: 'idle',
   error: null,
 }
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await client.get('/fakeApi/posts')
+  return response.data
+})
 
 const postsSlice = createSlice({
   name: 'posts',

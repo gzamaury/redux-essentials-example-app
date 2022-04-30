@@ -19,7 +19,7 @@ const usersSlice = createSlice({
   },
 })
 
-export const selectUsers = (state) => state.users
+export const selectAllUsers = (state) => state.users
 export const selectUserById = (userId) => (state) =>
   state.users.find((user) => user.id === userId)
 

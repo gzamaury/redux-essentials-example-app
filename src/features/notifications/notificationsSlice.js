@@ -41,6 +41,7 @@ const notificationsSlice = createSlice({
   initialState: [],
   reducers: {},
   extraReducers: {
+    // @ts-ignore
     [fetchNotifications.fulfilled]: (state, action) => {
       state.push(...action.payload)
       // Sort with newest first

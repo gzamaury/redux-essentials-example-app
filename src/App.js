@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Navbar } from './app/Navbar'
+import { NotificationsList } from './features/notifications/notificationsList'
 import { AddPostForm } from './features/posts/AddPostForm'
 import { EditPostForm } from './features/posts/EditPostForm'
 import { PostsList } from './features/posts/PostsList'
@@ -34,6 +35,7 @@ function App() {
           <Route exact path="/editPost/:postId" component={EditPostForm} />
           <Route exact path="/users" component={UsersList} />
           <Route exact path="/users/:userId" component={UserPage} />
+          <Route exact path="/notifications" component={NotificationsList} />
           <Redirect to="/" />
         </Switch>
       </div>

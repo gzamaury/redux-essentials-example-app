@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectAllPosts } from '../posts/postsSlice'
+import { selectPostsByUser } from '../posts/postsSlice'
 import { selectUserById } from './usersSlice'
 
 export const UserPage = ({ match }) => {
@@ -22,11 +22,15 @@ export const UserPage = ({ match }) => {
     calling filter() inside of our useSelector hook, so that we only return the list 
     of posts that belong to this user. Unfortunately, this means that useSelector 
     always returns a new array reference, and so our component will re-render after 
-    every action even if the posts data hasn't changed!. */
-  const postsForUser = useSelector((state) => {
-    const allPosts = selectAllPosts(state)
-    return allPosts.filter((post) => post.user === userId)
-  })
+    every action even if the posts data hasn't changed!.
+    const postsForUser = useSelector((state) => {
+      const allPosts = selectAllPosts(state)
+      return allPosts.filter((post) => post.user === userId)
+    }) */
+
+  /* If we call this selector in <UserPage> and re-run the React profiler while fetching 
+    notifications, we should see that <UserPage> doesn't re-render this time */
+  const postsForUser = useSelector(selectPostsByUser(userId))
 
   const postTitles = postsForUser.map((post) => (
     <li key={post.id}>

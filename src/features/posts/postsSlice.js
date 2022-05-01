@@ -1,6 +1,11 @@
 import { client } from '../../api/client'
 
-const { createSlice, nanoid, createAsyncThunk } = require('@reduxjs/toolkit')
+const {
+  createSlice,
+  nanoid,
+  createAsyncThunk,
+  createSelector,
+} = require('@reduxjs/toolkit')
 
 const initialState = {
   posts: [],
@@ -41,6 +46,7 @@ const postsSlice = createSlice({
         meta field, which can be used to add extra descriptive values to the action, and
         an error field, which should be a boolean indicating whether this action 
         represents some kind of an error.) */
+      // @ts-ignore
       prepare(title, content, userId) {
         return {
           payload: {
@@ -115,3 +121,20 @@ export default postsSlice.reducer
 export const selectAllPosts = (state) => state.posts.posts
 export const selectPostById = (postId) => (state) =>
   state.posts.posts.find((post) => post.id === postId)
+
+/* createSelector() takes one or more "input selector" functions as argument, plus an 
+  "output selector" function. When we call selectPostsByUser(state, userId), createSelector 
+  will pass all of the arguments into each of our input selectors. Whatever those input 
+  selectors return becomes the arguments for the output selector. In this case, we know that 
+  we need the array of all posts and the user ID as the two arguments for our output selector. 
+  We can reuse our existing selectAllPosts selector to extract the posts array. Since the user 
+  ID is the second argument we're passing into selectPostsByUser, we can write a small selector 
+  that just returns userId.
+
+  Our output selector then takes posts and userId, and returns the filtered array of posts for 
+  just that user. If we try calling selectPostsByUser multiple times, it will only re-run the 
+  output selector if either posts or userId has changed. */
+export const selectPostsByUser = (userId) =>
+  createSelector([selectAllPosts, (state) => userId], (posts, userId) =>
+    posts.filter((post) => post.user === userId)
+  )

@@ -36,6 +36,38 @@ const {
   const userId = 'user2'
   const userObject = state.users.entities[userId] */
 
+/* --- Managing Normalized State with createEntityAdapter ---
+  
+  Redux Toolkit's createEntityAdapter() API provides a standardized way to store your 
+  data in a slice by taking a collection of items and putting them into the shape of 
+  { ids: [], entities: {} }. Along with this predefined state shape, it generates a set 
+  of reducer functions and selectors that know how to work with that data.
+
+  This has several benefits:
+
+  - We don't have to write the code to manage the normalization ourselves.
+  - createEntityAdapter's pre-built reducer functions handle common cases like "add all 
+    these items", "update one item", or "remove multiple items"
+  - createEntityAdapter can keep the ID array in a sorted order based on the contents of 
+    the items, and will only update that array if items are added / removed or the sorting 
+    order changes.
+  - createEntityAdapter accepts an options object that may include a sortComparer function, 
+    which will be used to keep the item IDs array in sorted order by comparing two items 
+    (and works the same way as Array.sort()).
+
+  It returns an object that contains a set of generated reducer functions for adding, 
+  updating, and removing items from an entity state object. These reducer functions can 
+  either be used as a case reducer for a specific action type, or as a "mutating" utility 
+  function within another reducer in createSlice.
+
+  The adapter object also has a getSelectors function. You can pass in a selector that 
+  returns this particular slice of state from the Redux root state, and it will generate 
+  selectors like selectAll and selectById.
+
+  Finally, the adapter object has a getInitialState function that generates an empty 
+  {ids: [], entities: {}} object. You can pass in more fields to getInitialState, and 
+  those will be merged in. */
+
 const initialState = {
   posts: [],
   status: 'idle',

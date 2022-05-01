@@ -19,7 +19,7 @@ export const EditPostForm = ({ match }) => {
 
   const onSavePostClicked = () => {
     if (title && content) {
-      dispatch(postUpdated({ id: postId, title, content }))
+      dispatch(postUpdated({ postId, title, content }))
       history.push(`/posts/${postId}`)
     }
   }

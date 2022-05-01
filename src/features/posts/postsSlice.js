@@ -7,6 +7,35 @@ const {
   createSelector,
 } = require('@reduxjs/toolkit')
 
+/* "Normalized state" means that:
+
+  - We only have one copy of each particular piece of data in our state, so there's no 
+    duplication.
+  - Data that has been normalized is kept in a lookup table, where the item IDs are the 
+    keys, and the items themselves are the values.
+  - There may also be an array of all of the IDs for a particular item type.
+
+  JavaScript objects can be used as lookup tables, similar to "maps" or "dictionaries" 
+  in other languages. Here's what the normalized state for a group of user objects might 
+  look like:
+
+  {
+    users: {
+      ids: ["user1", "user2", "user3"],
+      entities: {
+        "user1": {id: "user1", firstName, lastName},
+        "user2": {id: "user2", firstName, lastName},
+        "user3": {id: "user3", firstName, lastName},
+      }
+    }
+  }
+
+  This makes it easy to find a particular user object by its ID, without having to loop 
+  through all the other user objects in an array:
+
+  const userId = 'user2'
+  const userObject = state.users.entities[userId] */
+
 const initialState = {
   posts: [],
   status: 'idle',

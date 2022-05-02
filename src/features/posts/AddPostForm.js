@@ -38,6 +38,7 @@ export const AddPostForm = () => {
         component using normal try/catch logic. */
       try {
         setAddRequestStatus('pending')
+        // @ts-ignore
         await dispatch(addNewPost({ title, content, user: userId })).unwrap()
         setTitle('')
         setContent('')
